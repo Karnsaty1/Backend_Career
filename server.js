@@ -31,16 +31,16 @@ app.use(
   })
 );
 
-// Middleware: CORS configuration
+// Middleware: CORS configuration to allow all origins
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://career-connect-one.vercel.app'],
-  credentials: true,
+  origin: '*', // Allow all origins
+  credentials: true, // Include credentials like cookies in the request
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.options('*', cors(corsOptions)); // Pre-flight requests
 
 // Middleware: Body parser and cookies
 app.use(express.json());
