@@ -5,7 +5,7 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 
-// Customized Helmet CSP configuration
+// Middleware: Helmet CSP configuration
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -17,11 +17,11 @@ app.use(
           "'unsafe-eval'",
           'https://vercel.live',
           'https://vercel.live/_next-live/feedback/feedback.js',
-        ], 
+        ],
         scriptSrcElem: [
           "'self'",
           'https://vercel.live',
-          'https://vercel.live/_next-live/feedback/feedback.js', 
+          'https://vercel.live/_next-live/feedback/feedback.js',
         ],
         connectSrc: ["'self'", 'https://vercel.live'],
         styleSrc: ["'self'", "'unsafe-inline'"],
@@ -31,7 +31,7 @@ app.use(
   })
 );
 
-// CORS configuration
+// Middleware: CORS configuration
 const corsOptions = {
   origin: ['http://localhost:3000', 'https://career-connect-one.vercel.app'],
   credentials: true,
@@ -42,25 +42,28 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
+// Middleware: Body parser and cookies
 app.use(express.json());
 app.use(cookieParser());
 
+// Database connection
 const { connectDB } = require('./db');
-
-(async () => {
-  try {
-    await connectDB();
-    app.use('/user/auth', require('./Routes/Auth'));
-    app.use('/user/data', require('./Routes/Data'));
-
-    // Add a root route to avoid "Cannot GET /"
-    app.get('/', (req, res) => {
-      res.send('Welcome to the backend API!');
-    });
-  } catch (error) {
+connectDB()
+  .then(() => {
+    console.log('Database connected successfully');
+  })
+  .catch((error) => {
     console.error('Error connecting to database:', error);
-  }
-})();
+  });
+
+// Routes
+app.use('/user/auth', require('./Routes/Auth'));
+app.use('/user/data', require('./Routes/Data'));
+
+// Root route to avoid "Cannot GET /"
+app.get('/', (req, res) => {
+  res.send('Welcome to the backend API!');
+});
 
 // Error-handling middleware
 app.use((err, req, res, next) => {
@@ -68,11 +71,5 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
-
-const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-
+// Export app for Vercel
 module.exports = app;
