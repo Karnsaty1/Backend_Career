@@ -33,7 +33,7 @@ app.use(
 
 // Middleware: CORS configuration to allow all origins
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: 'https://carrer-front-end.vercel.app',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
