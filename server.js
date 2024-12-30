@@ -33,8 +33,8 @@ app.use(
 
 // Middleware: CORS configuration to allow all origins
 const corsOptions = {
-  origin: '*', // Allow all origins
-  credentials: true, // Include credentials like cookies in the request
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
