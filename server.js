@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const cors = require('cors');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
@@ -31,21 +30,11 @@ app.use(
   })
 );
 
-// Middleware: CORS configuration to allow all origins
-const corsOptions = {
-  origin: true, 
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-};
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Pre-flight requests
-
 // Middleware: Body parser and cookies
 app.use(express.json());
 app.use(cookieParser());
 
-// Database connection
+
 const { connectDB } = require('./db');
 connectDB()
   .then(() => {
