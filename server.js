@@ -33,12 +33,11 @@ app.use(
 
 // Middleware: CORS configuration to allow all origins
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL,'https://carrer-front-end.vercel.app','https://carrer-front-end.vercel.app'],
+  origin: true, 
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
-
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Pre-flight requests
 
