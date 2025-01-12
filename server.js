@@ -4,31 +4,8 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 
-// Middleware: Helmet CSP configuration
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'",
-          'https://vercel.live',
-          'https://vercel.live/_next-live/feedback/feedback.js',
-        ],
-        scriptSrcElem: [
-          "'self'",
-          'https://vercel.live',
-          'https://vercel.live/_next-live/feedback/feedback.js',
-        ],
-        connectSrc: ["'self'", 'https://vercel.live'],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", 'data:'],
-      },
-    },
-  })
-);
+
+
 
 // Middleware: Body parser and cookies
 app.use(express.json());
